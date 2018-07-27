@@ -28,15 +28,15 @@ RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/explicit_defaults_for_timestamp = 
 
 # apache config
 COPY conf/serve-web-dir.conf /tmp/
-RUN apt-get install -y apache2 libapache2-mod-fcgid
-RUN sed -i 's/<\/VirtualHost>/\tAlias \/phpmyadmin\/ "\/usr\/share\/phpmyadmin\/"\n\t<IfModule mod_fastcgi.c>\n\t\tAddType application\/x-httpd-fastphp7.1 .php\n\t\tAction application\/x-httpd-fastphp7.1 \/php7.1-fcgi\n\t\tAlias \/php7.1-fcgi \/usr\/lib\/cgi-bin\/php7.1-fcgi\n\t\tFastCgiExternalServer \/usr\/lib\/cgi-bin\/php7.1-fcgi -socket \/run\/php\/php7.1-fpm.sock -idle-timeout 900\n\t<\/IfModule>\n<\/VirtualHost>/g' /etc/apache2/sites-available/000-default.conf
-RUN sed -i 's/<\/VirtualHost>/\tAlias \/phpmyadmin\/ "\/usr\/share\/phpmyadmin\/"\n\t<IfModule mod_fastcgi.c>\n\t\t\tAddType application\/x-httpd-fastphp7.1 .php\n\t\t\tAction application\/x-httpd-fastphp7.1 \/php7.1-fcgi\n\t\t\tAlias \/php7.1-fcgi \/usr\/lib\/cgi-bin\/php7.1-fcgi\n\t\t<\/IfModule>\n\t<\/VirtualHost>/g' /etc/apache2/sites-available/default-ssl.conf && \
+RUN apt-get install -y apache2
+RUN sed -i 's/<\/VirtualHost>/\tAlias \/phpmyadmin\/ "\/usr\/share\/phpmyadmin\/"\n\t<FilesMatch \\.php$>\n\t\tSetHandler "proxy:unix:\/var\/run\/php\/php7.0-fpm.sock|fcgi:\/\/localhost\/"\n\t<\/FilesMatch>\n\tProxyPassMatch ^\/phpmyadmin\/(.*\\.php(\/.*)?)$ unix:\/var\/run\/php\/php7.0-fpm.sock|fcgi:\/\/\/usr\/share\/phpmyadmin\/\n<\/VirtualHost>/g' /etc/apache2/sites-available/000-default.conf
+RUN sed -i 's/<\/VirtualHost>/\tAlias \/phpmyadmin\/ "\/usr\/share\/phpmyadmin\/"\n\t\t<FilesMatch \\.php$>\n\t\t\tSetHandler "proxy:unix:\/var\/run\/php\/php7.0-fpm.sock|fcgi:\/\/localhost\/"\n\t\t<\/FilesMatch>\n\t\tProxyPassMatch ^\/phpmyadmin\/(.*\\.php(\/.*)?)$ unix:\/var\/run\/php\/php7.0-fpm.sock|fcgi:\/\/\/usr\/share\/phpmyadmin\/\n\t<\/VirtualHost>/g' /etc/apache2/sites-available/default-ssl.conf && \
     sed -i 's/\/var\/www\/html/\/home\/magento\/files\/html/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/default-ssl.conf && \
     cat /tmp/serve-web-dir.conf >> /etc/apache2/apache2.conf && rm -f /tmp/serve-web-dir.conf  && \
-    a2enmod actions fcgid alias setenvif && \
+    a2enmod actions proxy_fcgi alias setenvif && \
     a2enmod rewrite expires headers && \
     echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf && \
-    a2enconf fqdn && \
+    a2enconf fqdn php7.0-fpm && \
     a2enmod ssl && \
     a2ensite default-ssl
 
