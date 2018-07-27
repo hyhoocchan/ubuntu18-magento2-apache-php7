@@ -16,10 +16,10 @@ Apache2                          RUNNING   pid 835, uptime 3:02:33
 BroswerBased-SSH                 RUNNING   pid 18, uptime 3:15:58
 Cron                             RUNNING   pid 19, uptime 3:15:58
 ElasticSearch_2.x_9200           STOPPED   Not started
-ElasticSearch_5.x_9202           RUNNING   pid 1865, uptime 1:59:34
+ElasticSearch_5.x_9202           STOPPED   Not started
 MySQL                            RUNNING   pid 14, uptime 3:15:58
 PHP-FPM                          RUNNING   pid 13, uptime 3:15:58
-RedisServer                      RUNNING   pid 17, uptime 3:15:58
+RedisServer                      STOPPED   Not started
 System-Log                       RUNNING   pid 21, uptime 3:15:58
 
 ```
