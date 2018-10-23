@@ -1,4 +1,5 @@
-### Run the latest magento 2 on Ubuntu 18.04.1 LTS, including: 
+### Run the latest magento 2 on Ubuntu 18.04.1 LTS, including
+
 - Shell In A Box – A Web-Based SSH Terminal - version 2.x
 - Apache 2.4.x
 - php-fpm 7.0.x
@@ -13,7 +14,6 @@
 ```bash
 magento@c9786d14b245:~/files/html$ sudo supervisorctl 
 Apache2                          RUNNING   pid 835, uptime 3:02:33
-BroswerBased-SSH                 RUNNING   pid 18, uptime 3:15:58
 Cron                             RUNNING   pid 19, uptime 3:15:58
 ElasticSearch_2.x_9200           STOPPED   Not started
 ElasticSearch_5.x_9202           STOPPED   Not started
@@ -27,7 +27,6 @@ ___
 
 ### Usage
 Services and ports exposed
-- Shell In A Box – A Web-Based SSH Terminal - http://<container_ip>:4200
 - ElasticSearch 5.6.4 - <container_ip>:9002
 - ElasticSearch 2.4.6 - <container_ip>:9000
 - MySQL - <container_ip>:3306
@@ -35,16 +34,17 @@ Services and ports exposed
 - Nginx and php-fpm 7.0.x - http://<container_ip> and https://<container_ip> for web browsing
 - Redis - <container_ip>:6379
 
-#### Sample container initialization: 
+#### Sample container initialization
 
 ```bash
-$ docker run -v <your-webapp-root-directory>:/home/magento/files/html -p 4022:4200 -p 9022:9011 --name docker-name -d thomasvan/ubuntu18-magento2-apache-php7-elasticsearch-mysql-phpmyadmin-redis-composer-modman:latest
+$ docker run -v <your-webapp-root-directory>:/home/magento/files/html -p 9022:9011 --name docker-name -d thomasvan/ubuntu18-magento2-apache-php7-elasticsearch-mysql-phpmyadmin-redis-composer-modman:latest
 ```
 ___
 
 After starting the container ubuntu18-magento2-apache-php7-elasticsearch-mysql-phpmyadmin-redis-composer-modman, please check to see if it has started and the port mapping is correct. This will also report the port mapping between the docker container and the host machine.
 
 ##### Accessing containers by port mapping
+
 ```bash
 $ docker ps
 
