@@ -1,6 +1,5 @@
 ### Run the latest magento 2 on Ubuntu 18.04.1 LTS, including
 
-- Shell In A Box – A Web-Based SSH Terminal - version 2.x
 - Apache 2.4.x
 - php-fpm 7.0.x
 - elasticsearch 5.6.4 and 2.4.6
